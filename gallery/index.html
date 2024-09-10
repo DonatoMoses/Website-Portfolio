@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Photo Gallery</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body and Layout */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            background-color: #988f8f;
+        }
+
+        header {
+            background: url('header-bg.jpg') no-repeat center center/cover;
+            color: #565151;
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        header h1 {
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 1rem;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 1rem;
+        }
+
+        nav ul li a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        nav ul li a:hover, nav ul li a:focus {
+            background-color: rgba(49, 47, 47, 0.3);
+            color: rgb(255, 255, 0);
+        }
+
+        main {
+            padding: 2rem 1rem;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        section {
+            margin-bottom: 2rem;
+        }
+
+        footer {
+            background: #4e4c4c;
+            color: #020000;
+            text-align: center;
+            padding: 1rem;
+            position: relative;
+        }
+
+        /* Gallery Styles */
+        .gallery {
+            text-align: center;
+        }
+
+        .gallery h2 {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            color: #444;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .gallery-grid img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .gallery-grid img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My Photo Gallery</h1>
+        <p>Welcome to my personal photo gallery. Explore my favorite snapshots taken with my phone.</p>
+        <nav>
+            <ul>
+                <li><a href="#about">Home</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main id="about">
+        <section>
+            <h2>About Me</h2>
+            <p>Hi, I'm Moses. I love capturing moments through my camera. Here you can find some of my favorite shots.</p>
+        </section>
+    </main>
+    <main id="gallery">
+        <section class="gallery">
+            <h2>Photo Gallery</h2>
+            <div class="gallery-grid">
+                <img src="drei.png.jpg" height="300" alt="picture ni drei" title="antok">
+                <img src="Ses.png.jpg" height="300" alt="picture ko" title="cute">
+                <img src="boys.png.jpg" height="300" alt="3boys" title="gymrat">
+                <img src="nerd.png.jpg" height="300" alt="ako ule" title="pogi">
+                <img src="laro.png.jpg" height="1000" width="1000" alt="roblaks" title="gangsta">
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Mapagmahal. All rights reserved.</p>
+    </footer>
+</body>
+</html>
