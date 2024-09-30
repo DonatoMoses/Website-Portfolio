@@ -18,12 +18,6 @@
         </nav>
     </header>
 
-   
-    
-    
-    
-    
-    </div>
 
     <section id="home">
         <div class="home-container">
@@ -32,22 +26,16 @@
             </div>
             <div class="home-content">
                 <h1>Boss Donato</h1>
-                <p>YOOOOOOOOOO!! My name is Moses Donato nga pala</p>
-                <div class="box-container">
-                    <a href="https://donatomoses.github.io/tictactoegame3rd/" class="box">
-                        <div class="box-content">Pag laroan mo ako haha</div>
-                    </a>
-                    <a href="gallery/gallery.html" class="box">
-                        <div class="box-content">View Gallery</div>
-                    </a>
-                </div>
+                <p>YOOOOOOOOOO!! Its your boy Moses Donato</p>
+               
             </div>
         </div>
     </section>
-    
+
 
     <section id="info">
-        <h2 class="section-heading">Things to remember about me</h2>
+        <h2>Info</h2>
+        <h3>Things to remenber about me</h3>
         <ul>
             <li>Idol ko si Batman</li>
             <li>loverboi ng bayan</li>
@@ -58,18 +46,26 @@
             <li>Hev abi enjoyer</li>
             <li>Al james listener</li>
             <li>sadboi tuwing 10pm</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
-            <li>Testing</li>
+
         </ul>
+    </section>
+
+    <section id="project-section">
+        <h2>My Project</h2>
+        <div class="project-box" onclick="togglePopup()">
+            <p>Pindutin mo ko baby</p>
+        </div>
+        <div id="popup" class="popup hidden">
+            <div class="popup-content">
+                
+                <a href="https://donatomoses.github.io/tictactoegame3rd/" class="box">
+                    <div class="box-content">Pag laroan mo ako haha</div>
+                </a>
+                <a href="gallery/gallery.html" class="box">
+                    <div class="box-content">View Gallery</div>
+                </a>
+            </div>
+        </div>
     </section>
 
     <section id="contact">
@@ -77,6 +73,9 @@
         <p>Feel free to reach out if you have any questions or just want to say hi!</p>
         <p>09682269965</p>
         <div class="social-media">
+            <a href="mailto:blusieeeee@gmail.com" target="_blank" class="social-icon">
+                <i class="fas fa-envelope"></i>
+            </a>
             <a href="https://www.facebook.com/blue.sieeeee" target="_blank" class="social-icon">
                 <i class="fab fa-facebook-f"></i>
             </a>
@@ -98,22 +97,24 @@
     </footer>
 
     <script>
+        function togglePopup() {
+            var popup = document.getElementById('popup');
+            popup.classList.toggle('hidden');
+        }
+
         let lastScrollTop = 0;
         const footer = document.getElementById('footer');
 
         window.addEventListener('scroll', () => {
             let currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-            if (currentScrollTop > lastScrollTop)
-             {
+            if (currentScrollTop > lastScrollTop) {
                 footer.classList.add('hidden');
-            } else 
-            {
+            } else {
                 footer.classList.remove('hidden');
             }
             lastScrollTop = currentScrollTop <= 0 ? 0 : currentScrollTop; // For Mobile or negative scrolling
         });
-            
     </script>
 </body>
 </html>

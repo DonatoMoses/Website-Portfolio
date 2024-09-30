@@ -1,203 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maze Generator</title>
-    <style>
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            margin: 0;
-        }
-        .maze {
-            display: grid;
-            grid-template-columns: repeat(10, 30px);
-            grid-template-rows: repeat(10, 30px);
-            position: relative;
-        }
-        .cell {
-            width: 30px;
-            height: 30px;
-            border: 1px solid #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-        .wall {
-            background-color: #333;
-        }
-        .path {
-            background-color: #fff;
-        }
-        .start {
-            background-color: #0f0;
-        }
-        .end {
-            background-color: #f00;
-        }
-        .character {
-            position: relative;
-            font-size: 20px;
-        }
-        .arrow {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            color: green; /* Arrow color */
-        }
-        #message {
-            margin-top: 20px;
-            font-size: 48px; /* Larger message */
-            font-weight: bold;
-            text-align: center;
-            display: none; /* Hide by default */
-        }
-        #restartButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maze Game</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+    }
+    
+    #maze-container {
+      display: inline-block;
+      border: 2px solid #000;
+      padding: 10px;
+      background-color: white;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 24px;
+      border: 1px solid #ccc;
+    }
+
+    .wall {
+      background-color: black;
+    }
+
+    .player {
+      background-color: yellow;
+    }
+
+    .goal {
+      background-color: green;
+    }
+
+    #reset-btn {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    #message {
+      margin-top: 10px;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
 </head>
 <body>
-    <div id="maze" class="maze"></div>
-    <div id="message"></div>
-    <button id="restartButton">Restart</button>
-    <script>
-        // Maze dimensions
-        const rows = 10;
-        const cols = 10;
-        const emojis = ['😀', '😎', '😍', '😂', '😭', '😡', '🤔', '🤩', '😱', '🥳'];
-        const arrows = ['↑', '←', '↓', '→']; // Direction arrows
 
-        // Define maze structure
-        const maze = [
-            [1, 0, 1, 1, 1, 0, 0, 1, 0, 0],
-            [1, 0, 0, 0, 1, 0, 1, 0, 1, 0],
-            [1, 1, 1, 0, 1, 0, 1, 0, 1, 1],
-            [1, 0, 0, 0, 0, 0, 1, 0, 0, 1],
-            [1, 1, 1, 1, 0, 1, 1, 1, 0, 1],
-            [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-            [1, 0, 1, 1, 1, 1, 1, 0, 1, 1],
-            [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
-            [1, 1, 1, 1, 1, 1, 1, 1, 0, 1],
-            [1, 1, 0, 0, 0, 1, 0, 1, 0, 0]
-        ];
+<div id="maze-container">
+  <table id="maze"></table>
+</div>
 
-        const mazeElement = document.getElementById('maze');
-        const messageElement = document.getElementById('message');
-        const restartButton = document.getElementById('restartButton');
-        let charX = 0, charY = 0; // Character position
-        let direction = 0; // 0 = up, 1 = left, 2 = down, 3 = right
+<button id="reset-btn" onclick="generateMaze()">Reset Maze</button>
+<div id="message"></div>
 
-        function createMaze() {
-            mazeElement.innerHTML = ''; // Clear previous maze
-            for (let row = 0; row < rows; row++) {
-                for (let col = 0; col < cols; col++) {
-                    const cell = document.createElement('div');
-                    cell.classList.add('cell');
-                    if (maze[row][col] === 1) {
-                        cell.classList.add('wall');
-                    } else {
-                        cell.classList.add('path');
-                    }
-                    mazeElement.appendChild(cell);
-                }
-            }
+<script>
+  const PLAYER = '😊';
+  const GOAL = '🏁';
+  const WALL = '⬛';
+  const EMPTY = '';
 
-            // Set start and end points
-            const start = document.querySelector('.cell:nth-child(1)');
-            const end = document.querySelector('.cell:nth-child(100)');
-            start.classList.add('start');
-            end.classList.add('end');
+  const mazeWidth = 10;
+  const mazeHeight = 10;
 
-            // Place the character
-            placeCharacter();
+  let maze = [];
+  let playerPosition = { x: 0, y: 0 };
+  let goalPosition = { x: 0, y: 0 };
+  let hasWon = false;
+
+  // Function to generate a solvable maze
+  function generateMaze() {
+    maze = [];
+    hasWon = false;
+    document.getElementById('message').innerText = ''; // Clear message
+
+    // Create empty maze
+    for (let y = 0; y < mazeHeight; y++) {
+      let row = [];
+      for (let x = 0; x < mazeWidth; x++) {
+        row.push(EMPTY);
+      }
+      maze.push(row);
+    }
+
+    // Set player start and goal position
+    playerPosition = { x: 0, y: 0 };
+    maze[playerPosition.y][playerPosition.x] = PLAYER;
+
+    // Randomly set the goal, ensuring it's far from the player
+    goalPosition = { x: mazeWidth - 1, y: mazeHeight - 1 };
+    maze[goalPosition.y][goalPosition.x] = GOAL;
+
+    // Create walls, ensuring the maze is solvable by carving a path
+    carvePath();
+
+    renderMaze();
+  }
+
+  // Function to carve a solvable path in the maze
+  function carvePath() {
+    let x = 0;
+    let y = 0;
+
+    while (x < mazeWidth - 1 || y < mazeHeight - 1) {
+      // Randomly move right or down
+      if (Math.random() < 0.5 && x < mazeWidth - 1) {
+        x++;
+      } else if (y < mazeHeight - 1) {
+        y++;
+      }
+
+      maze[y][x] = EMPTY;
+    }
+
+    // Add some random walls elsewhere in the maze
+    for (let i = 0; i < mazeWidth * mazeHeight * 0.3; i++) {
+      const randX = Math.floor(Math.random() * mazeWidth);
+      const randY = Math.floor(Math.random() * mazeHeight);
+
+      if (maze[randY][randX] === EMPTY && !(randX === 0 && randY === 0) && !(randX === goalPosition.x && randY === goalPosition.y)) {
+        maze[randY][randX] = WALL;
+      }
+    }
+  }
+
+  // Function to render the maze
+  function renderMaze() {
+    const mazeTable = document.getElementById('maze');
+    mazeTable.innerHTML = '';
+
+    for (let y = 0; y < mazeHeight; y++) {
+      let row = document.createElement('tr');
+      for (let x = 0; x < mazeWidth; x++) {
+        let cell = document.createElement('td');
+        if (maze[y][x] === WALL) {
+          cell.classList.add('wall');
+        } else if (maze[y][x] === PLAYER) {
+          cell.classList.add('player');
+          cell.innerText = PLAYER;
+        } else if (maze[y][x] === GOAL) {
+          cell.classList.add('goal');
+          cell.innerText = GOAL;
         }
+        row.appendChild(cell);
+      }
+      mazeTable.appendChild(row);
+    }
+  }
 
-        function placeCharacter() {
-            const index = charY * cols + charX + 1; // Convert coordinates to cell index (1-based)
-            const cells = document.querySelectorAll('.cell');
-            cells.forEach(cell => cell.classList.remove('character'));
-            const characterCell = cells[index - 1];
-            characterCell.classList.add('character');
-            characterCell.textContent = getRandomEmoji();
-            updateArrow(characterCell);
-        }
-    
+  // Function to move the player
+  function movePlayer(dx, dy) {
+    if (hasWon) return; // Stop movement after winning
 
-        function getRandomEmoji() {
-            return emojis[Math.floor(Math.random() * emojis.length)];
-        }
+    const newX = playerPosition.x + dx;
+    const newY = playerPosition.y + dy;
 
-        function updateArrow(cell) {
-            let arrowElement = cell.querySelector('.arrow');
-            if (!arrowElement) {
-                arrowElement = document.createElement('div');
-                arrowElement.classList.add('arrow');
-                cell.appendChild(arrowElement);
-            }
-            arrowElement.textContent = arrows[direction];
-        }
+    // Ensure the move is within bounds and not into a wall
+    if (newX >= 0 && newX < mazeWidth && newY >= 0 && newY < mazeHeight && maze[newY][newX] !== WALL) {
+      maze[playerPosition.y][playerPosition.x] = EMPTY;  // Remove player from old position
+      playerPosition.x = newX;
+      playerPosition.y = newY;
+      maze[playerPosition.y][playerPosition.x] = PLAYER;  // Place player in new position
 
-        function moveCharacter(dx, dy, newDirection) {
-            const newX = charX + dx;
-            const newY = charY + dy;
+      if (playerPosition.x === goalPosition.x && playerPosition.y === goalPosition.y) {
+        hasWon = true;
+        document.getElementById('message').innerText = 'Nanalo ka ng jaket!';
+        setTimeout(generateMaze, 3000);  // Generate a new maze after 3 seconds
+      }
 
-            if (newX >= 0 && newX < cols && newY >= 0 && newY < rows && maze[newY][newX] === 0) {
-                charX = newX;
-                charY = newY;
-                direction = newDirection;
-                placeCharacter();
+      renderMaze();  // Re-render the maze
+    }
+  }
+ 
+  // Event listener for arrow key movement
+  document.addEventListener('keydown', (event) => {
+    switch (event.key) {
+      case 'ArrowUp':
+        movePlayer(0, -1);
+        break;
+      case 'ArrowDown':
+        movePlayer(0, 1);
+        break;
+      case 'ArrowLeft':
+        movePlayer(-1, 0);
+        break;
+      case 'ArrowRight':
+        movePlayer(1, 0);
+        break;
+    }
+  });
 
-                // Check if reached the end
-                if (charX === cols - 1 && charY === rows - 1) {
-                    messageElement.textContent = "NANALO KA NG JACKET";
-                    messageElement.style.display = 'block'; // Show message
-                }
-            }
-        }
+  // Generate the initial maze
+  generateMaze();
+</script>
 
-        function restartGame() {
-            charX = 0;
-            charY = 0;
-            direction = 0;
-            messageElement.style.display = 'none'; // Hide message
-            createMaze();
-        }
-
-        document.addEventListener('keydown', (event) => {
-            switch (event.key) {
-                case 'w': // Move up
-                    moveCharacter(0, -1, 0);
-                    break;
-                case 'a': // Move left
-                    moveCharacter(-1, 0, 1);
-                    break;
-                case 's': // Move down
-                    moveCharacter(0, 1, 2);
-                    break;
-                case 'd': // Move right
-                    moveCharacter(1, 0, 3);
-                    break;
-            }
-        });
-
-        restartButton.addEventListener('click', restartGame);
-
-        createMaze();
-    </script>
 </body>
 </html>
