@@ -6,12 +6,89 @@ body {
     color: #f5f5f5;
     overflow-x: hidden;
     padding-bottom: 60px;
-    margin-top: 80px; /* Adjust for header height */
+    margin-top: 80px;
 }
 
+/* Fullscreen loader */
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #282c34; /* Background color of your loader */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    z-index: 9999;
+    overflow: hidden; /* Prevent overflow of memes */
+}
+
+/* Spinner animation */
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.2); /* Light border */
+    border-top: 8px solid white; /* White color on top */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+    margin-bottom: 10px;
+}
+
+/* Spinner animation keyframes */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Loading message styling */
+.loader p {
+    font-size: 28px; /* Increase font size for better visibility */
+    font-weight: bold; /* Make the text bold */
+    margin-top: 20px;
+    text-align: center; /* Center the text */
+}
+
+/* Hide the content until the loader is done */
+#content {
+    display: none;
+}
+
+
+.typewriter p {
+    font-size: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid white;
+    width: 0;
+    animation: typing 10s steps(40, end) infinite, blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    50% {
+        width: 100%; /* Fully typed */
+    }
+    75% {
+        width: 100%; /* Pause before deleting */
+    }
+    100% {
+        width: 0; /* Slowly delete */
+    }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: white; }
+}
+
+
 header {
-    background-color: rgba(51, 51, 51, 0.7); /* 70% transparent background */
-    color: #f5f5f5;
+    background-color: rgba(51, 51, 51, 0.7); 
     padding: 20px;
     text-align: center;
     position: fixed;
@@ -19,11 +96,11 @@ header {
     left: 10;
     right: 0;
     z-index: 1000;
-    transition: background-color 0.3s ease; /* Smooth transition for scrolling or hover effect */
+    transition: background-color 0.3s ease; 
 }
 
 header:hover {
-    background-color: rgba(51, 51, 51, 1); /* Full background color when hovered */
+    background-color: rgba(51, 51, 51, 1); 
 }
 
 nav ul {
@@ -135,8 +212,6 @@ footer {
     left: 0;
     right: 0;
 }
-
-
 
 html {
     scroll-behavior: smooth;
