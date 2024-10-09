@@ -12,7 +12,7 @@
             setTimeout(function() {
                 document.getElementById('loader').style.display = 'none';
                 document.getElementById('content').style.display = 'block';
-            }, 9700); // 9600 milliseconds = 9.6 seconds
+            }, 1500); // 9600 milliseconds = 9.6 seconds
         };
 
         // Array of random text phrases (removed number phrases)
@@ -39,6 +39,7 @@
     </script>
 </head>
 <body>
+    <div class="head">
     <header>
         <nav>
             <ul>
@@ -48,6 +49,7 @@
             </ul>
         </nav>
     </header>
+</div>
 <!-- Loading screen -->
 <div id="loader" class="loader">
     <div class="spinner"></div>
@@ -70,7 +72,8 @@
         </div>
     </section>
     
-        <div class="about-me"></div>
+        <div class="aboutMe-container">
+            <div class="about-me">
             <h1>About Me</h1>
             <p>
                 Hello, everyone!<br>
@@ -78,28 +81,29 @@
                 I’m a Grade 11 student studying Information and Communications Technology (ICT) as part of the Senior High School curriculum. 
                 I chose ICT because I’ve always been interested in technology and how it impacts the world. 
                 I’m eager to develop my skills in areas like programming, networking, and computer systems, as I believe these will play a big role in shaping my future career.
-            </p>
-            <p>
+            <br><br>
+            
                 When I’m not focused on my studies, I enjoy playing online games, especially Valorant. 
                 Gaming helps me improve my problem-solving and teamwork skills, which are important both in games and in real-life situations. 
                 I find gaming to be not just a way to relax, but also a way to challenge myself and learn new strategies.
-            </p>
-            <p>
+            <br><br>
+            
                 Aside from my interest in technology and gaming, I have a deep love for animals. 
                 At home, we have several dogs and cats, and taking care of them has become a big part of my daily life. 
                 Having pets has taught me responsibility, patience, and how to care for others. 
                 Whether it's feeding them, cleaning up after them, or just spending time with them, 
                 I’ve learned to be dependable when it comes to taking care of something important.
-            </p>
-            <p>
+            <br><br>
+            
                 Looking ahead, I’m excited to continue growing both in my studies and personal interests. 
                 My goal is to one day work in the tech industry, possibly in IT support, software development, or network management. 
                 I believe the skills I’m developing in ICT, along with the lessons I’ve learned from gaming and caring for animals, 
                 will help me succeed in whatever path I choose.
             </p>
         </div>
+        </div>
         
-        <h3>Also here are the things that I also do.</h3>
+        <h3 id="info">Also here are the things that I also do.</h3>
         <ul>
             <li>Idol ko si Batman</li>
             <li>loverboi ng bayan</li>
@@ -126,10 +130,19 @@
             <div class="popup-content">
                 
                 <a href="https://donatomoses.github.io/tictactoegame3rd/" class="box">
-                    <div class="box-content">Pag laroan mo ako haha</div>
+                    <div class="box-content">1. Pag laroan mo ako haha</div>
                 </a>
                 <a href="gallery/gallery.html" class="box">
-                    <div class="box-content">View Gallery</div>
+                    <div class="box-content">2. View Gallery</div>
+                </a>
+                <a href="maze.html" class="box">
+                    <div class="box-content">3. Maze</div>
+                </a>
+                <a href="PapertoCode.html" class="box">
+                    <div class="box-content">4. Paper</div>
+                </a>
+                <a href="index.html" class="EEXIT">
+                    <div class="box-content">EXIT</div></a>
                 </a>
             </div>
         </div>
